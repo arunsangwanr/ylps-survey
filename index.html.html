@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Life Perspectives Scale (YLPS-50) - Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 30px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .required {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            background: #f0f0f0;
+            border-color: #667eea;
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+        }
+
+        .scale-table th,
+        .scale-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .scale-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .scale-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: #f9f9f9;
+        }
+
+        .scale-table input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .ranking-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ranking-item input[type="number"] {
+            width: 60px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .success-message p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #f5c6cb;
+        }
+
+        .response-id {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .scale-table {
+                font-size: 0.85em;
+            }
+            
+            .scale-table th,
+            .scale-table td {
+                padding: 8px 4px;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .instructions strong {
+            color: #856404;
+        }
+
+        .author-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-left: 4px solid #667eea;
+        }
+
+        .author-badge .author-name {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        .author-badge .author-title {
+            font-size: 0.85em;
+            color: #666;
+            margin: 2px 0 0 0;
+        }
+
+        .header-author {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .header-author p {
+            font-size: 1em;
+            margin: 5px 0;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .author-badge {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+            
+            .author-badge .author-name {
+                font-size: 0.85em;
+            }
+            
+            .author-badge .author-title {
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Submitting your responses...</h3>
+            <p>Please wait, do not close this window.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Author Badge - Top Right Corner -->
+        <div class="author-badge">
+            <p class="author-name">Dr. Arun Sangwan</p>
+            <p class="author-title">(Psychologist)</p>
+        </div>
+
+        <div class="header">
+            <h1>Youth Life Perspectives Scale (YLPS-50)</h1>
+            <p>A Research Study on Values, Beliefs, and Life Perspectives of Indian Youth</p>
+            <div class="header-author">
+                <p style="font-size: 1.1em; font-weight: 600;">Dr. Arun Sangwan</p>
+                <p style="font-size: 0.95em;">(Psychologist)</p>
+            </div>
+            <p style="font-size: 0.9em; margin-top: 10px;">Estimated Time: 15-20 minutes</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="content">
+            <form id="surveyForm">
+                
+                <!-- SECTION 0: CONSENT -->
+                <div class="section active" data-section="0">
+                    <div class="section-title">Informed Consent</div>
+                    
+                    <div class="info-box">
+                        <h3 style="margin-bottom: 10px;">About This Survey</h3>
+                        <p style="margin-bottom: 10px;">This survey is part of a research study to understand the perspectives, values, and worldviews of young Indian adults aged 18-28 years.</p>
+                        
+                        <p style="margin-bottom: 10px;"><strong>Your participation is voluntary and you may:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 10px;">
+                            <li>Choose not to participate</li>
+                            <li>Stop at any time without penalty</li>
+                            <li>Skip any questions you're uncomfortable answering</li>
+                        </ul>
+                        
+                        <p style="margin-bottom: 10px;"><strong>Confidentiality:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 10px;">
+                            <li>Your responses are completely confidential</li>
+                            <li>No personally identifiable information will be collected</li>
+                            <li>Data will be used only for research purposes</li>
+                            <li>Results will be reported in aggregate form only</li>
+                        </ul>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">
+                            <span class="required">*</span> I have read and understood the above information and consent to participate in this study
+                        </div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="consent" value="yes" required>
+                                <span>Yes, I consent to participate</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="consent" value="no">
+                                <span>No, I do not wish to participate</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 1: DEMOGRAPHICS -->
+                <div class="section" data-section="1">
+                    <div class="section-title">Part A: Background Information</div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 1. Age (in years)</div>
+                        <input type="number" name="age" min="18" max="28" required placeholder="Enter your age">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 2. Gender</div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="male" required>
+                                <span>Male</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="female">
+                                <span>Female</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="other">
+                                <span>Other</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 3. Educational Qualification</div>
+                        <select name="education" required>
+                            <option value="">-- Select --</option>
+                            <option value="12th">12th Pass</option>
+                            <option value="ug_pursuing">Pursuing Undergraduate</option>
+                            <option value="ug_complete">Undergraduate Completed</option>
+                            <option value="pg_pursuing">Pursuing Postgraduate</option>
+                            <option value="pg_complete">Postgraduate Completed</option>
+                            <option value="professional">Professional Degree</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 4. Current Status</div>
+                        <select name="occupation" required>
+                            <option value="">-- Select --</option>
+                            <option value="student">Student</option>
+                            <option value="employed_full">Employed (Full-time)</option>
+                            <option value="employed_part">Employed (Part-time)</option>
+                            <option value="self_employed">Self-employed/Business</option>
+                            <option value="unemployed_seeking">Unemployed (seeking work)</option>
+                            <option value="unemployed_not_seeking">Unemployed (not seeking work)</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 5. Family Type</div>
+                        <select name="family_type" required>
+                            <option value="">-- Select --</option>
+                            <option value="nuclear">Nuclear Family</option>
+                            <option value="joint">Joint Family</option>
+                            <option value="independent">Living Independently</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 6. Residential Area</div>
+                        <select name="residence" required>
+                            <option value="">-- Select --</option>
+                            <option value="metro">Metropolitan City</option>
+                            <option value="urban">Urban/City</option>
+                            <option value="semi_urban">Semi-urban/Town</option>
+                            <option value="rural">Rural/Village</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 7. State/Region of Residence</div>
+                        <input type="text" name="state" required placeholder="Enter your state">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 8. Religious Background</div>
+                        <select name="religion" required>
+                            <option value="">-- Select --</option>
+                            <option value="hindu">Hindu</option>
+                            <option value="muslim">Muslim</option>
+                            <option value="christian">Christian</option>
+                            <option value="sikh">Sikh</option>
+                            <option value="buddhist">Buddhist</option>
+                            <option value="jain">Jain</option>
+                            <option value="none">No religion/Atheist</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: ROLE MODELS -->
+                <div class="section" data-section="2">
+                    <div class="section-title">Section 1: Role Models & Influences</div>
+                    
+                    <div class="instructions">
+                        <strong>Instructions:</strong> Think about the people who influence your thoughts, decisions, and life choices.
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 1. Who is your PRIMARY role model?</div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="parent" required>
+                                <span>Mother/Father</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="family">
+                                <span>Other family member</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="teacher">
+                                <span>Teacher/Mentor</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="celebrity">
+                                <span>Film/Sports celebrity</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="influencer">
+                                <span>Social media influencer</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="religious">
+                                <span>Religious/Spiritual leader</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="business">
+                                <span>Business leader/Entrepreneur</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q1_rolemodel" value="none">
+                                <span>No specific role model</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 2-5. Rate the influence of these sources on your life decisions:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>None<br>(1)</th>
+                                    <th>Little<br>(2)</th>
+                                    <th>Moderate<br>(3)</th>
+                                    <th>Strong<br>(4)</th>
+                                    <th>Very Strong<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2. Family (parents/elders)</td>
+                                    <td><input type="radio" name="q2_family" value="1" required></td>
+                                    <td><input type="radio" name="q2_family" value="2"></td>
+                                    <td><input type="radio" name="q2_family" value="3"></td>
+                                    <td><input type="radio" name="q2_family" value="4"></td>
+                                    <td><input type="radio" name="q2_family" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Friends/Peers</td>
+                                    <td><input type="radio" name="q3_friends" value="1" required></td>
+                                    <td><input type="radio" name="q3_friends" value="2"></td>
+                                    <td><input type="radio" name="q3_friends" value="3"></td>
+                                    <td><input type="radio" name="q3_friends" value="4"></td>
+                                    <td><input type="radio" name="q3_friends" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Celebrities (film/sports)</td>
+                                    <td><input type="radio" name="q4_celebrities" value="1" required></td>
+                                    <td><input type="radio" name="q4_celebrities" value="2"></td>
+                                    <td><input type="radio" name="q4_celebrities" value="3"></td>
+                                    <td><input type="radio" name="q4_celebrities" value="4"></td>
+                                    <td><input type="radio" name="q4_celebrities" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Social Media/Influencers</td>
+                                    <td><input type="radio" name="q5_social_media" value="1" required></td>
+                                    <td><input type="radio" name="q5_social_media" value="2"></td>
+                                    <td><input type="radio" name="q5_social_media" value="3"></td>
+                                    <td><input type="radio" name="q5_social_media" value="4"></td>
+                                    <td><input type="radio" name="q5_social_media" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 6. Daily social media usage:</div>
+                        <select name="q6_social_media_time" required>
+                            <option value="">-- Select --</option>
+                            <option value="less_1">Less than 1 hour</option>
+                            <option value="1_2">1-2 hours</option>
+                            <option value="2_4">2-4 hours</option>
+                            <option value="4_6">4-6 hours</option>
+                            <option value="6_plus">More than 6 hours</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 7. I compare my life/appearance with people I see on social media</div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="q7_social_compare" value="1" required>
+                                <span>Never</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q7_social_compare" value="2">
+                                <span>Rarely</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q7_social_compare" value="3">
+                                <span>Sometimes</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q7_social_compare" value="4">
+                                <span>Often</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q7_social_compare" value="5">
+                                <span>Very Often</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 8. The quality I most admire in role models is:</div>
+                        <select name="q8_admired_quality" required>
+                            <option value="">-- Select --</option>
+                            <option value="success">Academic/Professional success</option>
+                            <option value="wealth">Wealth/Fame</option>
+                            <option value="moral">Moral/Ethical values</option>
+                            <option value="hardwork">Hard work/Perseverance</option>
+                            <option value="compassion">Compassion/Social service</option>
+                            <option value="independence">Independence/Courage</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: LIFE PHILOSOPHY -->
+                <div class="section" data-section="3">
+                    <div class="section-title">Section 2: Life Philosophy & Worldview</div>
+                    
+                    <div class="instructions">
+                        <strong>Instructions:</strong> Rate your agreement with each statement. There are no right or wrong answers.
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 9-18. Rate your agreement:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Strongly<br>Disagree<br>(1)</th>
+                                    <th>Disagree<br>(2)</th>
+                                    <th>Neutral<br>(3)</th>
+                                    <th>Agree<br>(4)</th>
+                                    <th>Strongly<br>Agree<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>9. Life has a predetermined purpose/destiny (karma)</td>
+                                    <td><input type="radio" name="q9_destiny" value="1" required></td>
+                                    <td><input type="radio" name="q9_destiny" value="2"></td>
+                                    <td><input type="radio" name="q9_destiny" value="3"></td>
+                                    <td><input type="radio" name="q9_destiny" value="4"></td>
+                                    <td><input type="radio" name="q9_destiny" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>10. We create our own meaning and purpose in life</td>
+                                    <td><input type="radio" name="q10_self_purpose" value="1" required></td>
+                                    <td><input type="radio" name="q10_self_purpose" value="2"></td>
+                                    <td><input type="radio" name="q10_self_purpose" value="3"></td>
+                                    <td><input type="radio" name="q10_self_purpose" value="4"></td>
+                                    <td><input type="radio" name="q10_self_purpose" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>11. Success comes mainly from hard work, not luck</td>
+                                    <td><input type="radio" name="q11_hardwork" value="1" required></td>
+                                    <td><input type="radio" name="q11_hardwork" value="2"></td>
+                                    <td><input type="radio" name="q11_hardwork" value="3"></td>
+                                    <td><input type="radio" name="q11_hardwork" value="4"></td>
+                                    <td><input type="radio" name="q11_hardwork" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>12. Material success (money/status) is the main goal of life</td>
+                                    <td><input type="radio" name="q12_material" value="1" required></td>
+                                    <td><input type="radio" name="q12_material" value="2"></td>
+                                    <td><input type="radio" name="q12_material" value="3"></td>
+                                    <td><input type="radio" name="q12_material" value="4"></td>
+                                    <td><input type="radio" name="q12_material" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>13. Spiritual/inner growth is more important than material success</td>
+                                    <td><input type="radio" name="q13_spiritual" value="1" required></td>
+                                    <td><input type="radio" name="q13_spiritual" value="2"></td>
+                                    <td><input type="radio" name="q13_spiritual" value="3"></td>
+                                    <td><input type="radio" name="q13_spiritual" value="4"></td>
+                                    <td><input type="radio" name="q13_spiritual" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>14. Serving others/society is a key purpose of life</td>
+                                    <td><input type="radio" name="q14_service" value="1" required></td>
+                                    <td><input type="radio" name="q14_service" value="2"></td>
+                                    <td><input type="radio" name="q14_service" value="3"></td>
+                                    <td><input type="radio" name="q14_service" value="4"></td>
+                                    <td><input type="radio" name="q14_service" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>15. Everything happens for a reason</td>
+                                    <td><input type="radio" name="q15_reason" value="1" required></td>
+                                    <td><input type="radio" name="q15_reason" value="2"></td>
+                                    <td><input type="radio" name="q15_reason" value="3"></td>
+                                    <td><input type="radio" name="q15_reason" value="4"></td>
+                                    <td><input type="radio" name="q15_reason" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>16. I am optimistic about my future</td>
+                                    <td><input type="radio" name="q16_optimism" value="1" required></td>
+                                    <td><input type="radio" name="q16_optimism" value="2"></td>
+                                    <td><input type="radio" name="q16_optimism" value="3"></td>
+                                    <td><input type="radio" name="q16_optimism" value="4"></td>
+                                    <td><input type="radio" name="q16_optimism" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>17. Human beings are fundamentally good</td>
+                                    <td><input type="radio" name="q17_human_good" value="1" required></td>
+                                    <td><input type="radio" name="q17_human_good" value="2"></td>
+                                    <td><input type="radio" name="q17_human_good" value="3"></td>
+                                    <td><input type="radio" name="q17_human_good" value="4"></td>
+                                    <td><input type="radio" name="q17_human_good" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>18. Life is ultimately about personal happiness</td>
+                                    <td><input type="radio" name="q18_happiness" value="1" required></td>
+                                    <td><input type="radio" name="q18_happiness" value="2"></td>
+                                    <td><input type="radio" name="q18_happiness" value="3"></td>
+                                    <td><input type="radio" name="q18_happiness" value="4"></td>
+                                    <td><input type="radio" name="q18_happiness" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 19. In ONE sentence, what is the purpose of YOUR life?</div>
+                        <textarea name="q19_life_purpose" required placeholder="Write your answer here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: VALUES -->
+                <div class="section" data-section="4">
+                    <div class="section-title">Section 3: Value System</div>
+                    
+                    <div class="instructions">
+                        <strong>Instructions:</strong> Think about what matters most to you in life.
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 20. Rank your TOP 5 VALUES (1 = Most Important, 5 = Least Important among your top 5)</div>
+                        <p style="color: #666; font-size: 0.9em; margin-top: 5px;">Enter a number from 1-5 for exactly 5 values. Leave others blank.</p>
+                        <div class="ranking-inputs">
+                            <div class="ranking-item">
+                                <input type="number" name="rank_family" min="1" max="5" placeholder="Rank">
+                                <label>Family/Relationships</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_career" min="1" max="5" placeholder="Rank">
+                                <label>Career Success</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_financial" min="1" max="5" placeholder="Rank">
+                                <label>Financial Security/Wealth</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_independence" min="1" max="5" placeholder="Rank">
+                                <label>Independence/Freedom</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_religion" min="1" max="5" placeholder="Rank">
+                                <label>Religion/Spirituality</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_respect" min="1" max="5" placeholder="Rank">
+                                <label>Respect in Society</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_happiness" min="1" max="5" placeholder="Rank">
+                                <label>Personal Happiness</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_knowledge" min="1" max="5" placeholder="Rank">
+                                <label>Knowledge/Learning</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_service" min="1" max="5" placeholder="Rank">
+                                <label>Service to Society</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="rank_tradition" min="1" max="5" placeholder="Rank">
+                                <label>Tradition/Cultural Heritage</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 21-26. When these values conflict, which is MORE important to you?</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Conflict</th>
+                                    <th>Choice A</th>
+                                    <th>Choice B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>21. Family expectations vs. Personal dreams</td>
+                                    <td><input type="radio" name="q21_conflict_family" value="family" required> Family</td>
+                                    <td><input type="radio" name="q21_conflict_family" value="personal"> Personal</td>
+                                </tr>
+                                <tr>
+                                    <td>22. Traditional values vs. Modern outlook</td>
+                                    <td><input type="radio" name="q22_conflict_tradition" value="traditional" required> Traditional</td>
+                                    <td><input type="radio" name="q22_conflict_tradition" value="modern"> Modern</td>
+                                </tr>
+                                <tr>
+                                    <td>23. Career success vs. Personal relationships</td>
+                                    <td><input type="radio" name="q23_conflict_career" value="career" required> Career</td>
+                                    <td><input type="radio" name="q23_conflict_career" value="relationships"> Relationships</td>
+                                </tr>
+                                <tr>
+                                    <td>24. Parents' wishes vs. Own choices (in marriage/career)</td>
+                                    <td><input type="radio" name="q24_conflict_parents" value="parents" required> Parents</td>
+                                    <td><input type="radio" name="q24_conflict_parents" value="own"> Own</td>
+                                </tr>
+                                <tr>
+                                    <td>25. Money/Security vs. Passion/Interest</td>
+                                    <td><input type="radio" name="q25_conflict_money" value="money" required> Money</td>
+                                    <td><input type="radio" name="q25_conflict_money" value="passion"> Passion</td>
+                                </tr>
+                                <tr>
+                                    <td>26. Moral principles vs. Practical benefits</td>
+                                    <td><input type="radio" name="q26_conflict_moral" value="moral" required> Moral</td>
+                                    <td><input type="radio" name="q26_conflict_moral" value="practical"> Practical</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 27-31. Rate your agreement:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Strongly<br>Disagree<br>(1)</th>
+                                    <th>Disagree<br>(2)</th>
+                                    <th>Neutral<br>(3)</th>
+                                    <th>Agree<br>(4)</th>
+                                    <th>Strongly<br>Agree<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>27. Arranged marriages can work as well as love marriages</td>
+                                    <td><input type="radio" name="q27_arranged_marriage" value="1" required></td>
+                                    <td><input type="radio" name="q27_arranged_marriage" value="2"></td>
+                                    <td><input type="radio" name="q27_arranged_marriage" value="3"></td>
+                                    <td><input type="radio" name="q27_arranged_marriage" value="4"></td>
+                                    <td><input type="radio" name="q27_arranged_marriage" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>28. Women should have equal career opportunities as men</td>
+                                    <td><input type="radio" name="q28_gender_equality" value="1" required></td>
+                                    <td><input type="radio" name="q28_gender_equality" value="2"></td>
+                                    <td><input type="radio" name="q28_gender_equality" value="3"></td>
+                                    <td><input type="radio" name="q28_gender_equality" value="4"></td>
+                                    <td><input type="radio" name="q28_gender_equality" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>29. Individual happiness is more important than family honor</td>
+                                    <td><input type="radio" name="q29_individual_happiness" value="1" required></td>
+                                    <td><input type="radio" name="q29_individual_happiness" value="2"></td>
+                                    <td><input type="radio" name="q29_individual_happiness" value="3"></td>
+                                    <td><input type="radio" name="q29_individual_happiness" value="4"></td>
+                                    <td><input type="radio" name="q29_individual_happiness" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>30. Caste/religion should not matter in marriage</td>
+                                    <td><input type="radio" name="q30_caste_religion" value="1" required></td>
+                                    <td><input type="radio" name="q30_caste_religion" value="2"></td>
+                                    <td><input type="radio" name="q30_caste_religion" value="3"></td>
+                                    <td><input type="radio" name="q30_caste_religion" value="4"></td>
+                                    <td><input type="radio" name="q30_caste_religion" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>31. Following religious rituals/practices is important to me</td>
+                                    <td><input type="radio" name="q31_religious_practice" value="1" required></td>
+                                    <td><input type="radio" name="q31_religious_practice" value="2"></td>
+                                    <td><input type="radio" name="q31_religious_practice" value="3"></td>
+                                    <td><input type="radio" name="q31_religious_practice" value="4"></td>
+                                    <td><input type="radio" name="q31_religious_practice" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECTION 5: APPROACH TO LIFE -->
+                <div class="section" data-section="5">
+                    <div class="section-title">Section 4: Approach to Life</div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 32-41. Rate your agreement:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Strongly<br>Disagree<br>(1)</th>
+                                    <th>Disagree<br>(2)</th>
+                                    <th>Neutral<br>(3)</th>
+                                    <th>Agree<br>(4)</th>
+                                    <th>Strongly<br>Agree<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>32. I prefer to plan everything in advance</td>
+                                    <td><input type="radio" name="q32_planning" value="1" required></td>
+                                    <td><input type="radio" name="q32_planning" value="2"></td>
+                                    <td><input type="radio" name="q32_planning" value="3"></td>
+                                    <td><input type="radio" name="q32_planning" value="4"></td>
+                                    <td><input type="radio" name="q32_planning" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>33. I am willing to take risks to achieve my goals</td>
+                                    <td><input type="radio" name="q33_risk_taking" value="1" required></td>
+                                    <td><input type="radio" name="q33_risk_taking" value="2"></td>
+                                    <td><input type="radio" name="q33_risk_taking" value="3"></td>
+                                    <td><input type="radio" name="q33_risk_taking" value="4"></td>
+                                    <td><input type="radio" name="q33_risk_taking" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>34. I learn from failures and keep trying</td>
+                                    <td><input type="radio" name="q34_resilience" value="1" required></td>
+                                    <td><input type="radio" name="q34_resilience" value="2"></td>
+                                    <td><input type="radio" name="q34_resilience" value="3"></td>
+                                    <td><input type="radio" name="q34_resilience" value="4"></td>
+                                    <td><input type="radio" name="q34_resilience" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>35. I make important decisions independently</td>
+                                    <td><input type="radio" name="q35_independence" value="1" required></td>
+                                    <td><input type="radio" name="q35_independence" value="2"></td>
+                                    <td><input type="radio" name="q35_independence" value="3"></td>
+                                    <td><input type="radio" name="q35_independence" value="4"></td>
+                                    <td><input type="radio" name="q35_independence" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>36. I actively seek new experiences and challenges</td>
+                                    <td><input type="radio" name="q36_openness" value="1" required></td>
+                                    <td><input type="radio" name="q36_openness" value="2"></td>
+                                    <td><input type="radio" name="q36_openness" value="3"></td>
+                                    <td><input type="radio" name="q36_openness" value="4"></td>
+                                    <td><input type="radio" name="q36_openness" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>37. When facing problems, I consult family/elders first</td>
+                                    <td><input type="radio" name="q37_consultation" value="1" required></td>
+                                    <td><input type="radio" name="q37_consultation" value="2"></td>
+                                    <td><input type="radio" name="q37_consultation" value="3"></td>
+                                    <td><input type="radio" name="q37_consultation" value="4"></td>
+                                    <td><input type="radio" name="q37_consultation" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>38. I am competitive and want to be better than others</td>
+                                    <td><input type="radio" name="q38_competitive" value="1" required></td>
+                                    <td><input type="radio" name="q38_competitive" value="2"></td>
+                                    <td><input type="radio" name="q38_competitive" value="3"></td>
+                                    <td><input type="radio" name="q38_competitive" value="4"></td>
+                                    <td><input type="radio" name="q38_competitive" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>39. I question traditions rather than blindly following them</td>
+                                    <td><input type="radio" name="q39_questioning" value="1" required></td>
+                                    <td><input type="radio" name="q39_questioning" value="2"></td>
+                                    <td><input type="radio" name="q39_questioning" value="3"></td>
+                                    <td><input type="radio" name="q39_questioning" value="4"></td>
+                                    <td><input type="radio" name="q39_questioning" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>40. Work-life balance is more important than career success</td>
+                                    <td><input type="radio" name="q40_work_life_balance" value="1" required></td>
+                                    <td><input type="radio" name="q40_work_life_balance" value="2"></td>
+                                    <td><input type="radio" name="q40_work_life_balance" value="3"></td>
+                                    <td><input type="radio" name="q40_work_life_balance" value="4"></td>
+                                    <td><input type="radio" name="q40_work_life_balance" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>41. I would relocate anywhere for a good career opportunity</td>
+                                    <td><input type="radio" name="q41_mobility" value="1" required></td>
+                                    <td><input type="radio" name="q41_mobility" value="2"></td>
+                                    <td><input type="radio" name="q41_mobility" value="3"></td>
+                                    <td><input type="radio" name="q41_mobility" value="4"></td>
+                                    <td><input type="radio" name="q41_mobility" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECTION 6: SUCCESS & HAPPINESS -->
+                <div class="section" data-section="6">
+                    <div class="section-title">Section 5: Success & Happiness Perspective</div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 42. Success means: (Choose TOP 3 and rank them 1, 2, 3)</div>
+                        <p style="color: #666; font-size: 0.9em; margin-top: 5px;">Enter 1, 2, or 3 for exactly 3 items. Leave others blank.</p>
+                        <div class="ranking-inputs">
+                            <div class="ranking-item">
+                                <input type="number" name="success_wealth" min="1" max="3" placeholder="Rank">
+                                <label>High income/Wealth</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_family" min="1" max="3" placeholder="Rank">
+                                <label>Happy family life</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_achievement" min="1" max="3" placeholder="Rank">
+                                <label>Professional achievement/Recognition</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_peace" min="1" max="3" placeholder="Rank">
+                                <label>Peace of mind/Contentment</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_helping" min="1" max="3" placeholder="Rank">
+                                <label>Helping others/Making a difference</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_respect" min="1" max="3" placeholder="Rank">
+                                <label>Respect in society</label>
+                            </div>
+                            <div class="ranking-item">
+                                <input type="number" name="success_spiritual" min="1" max="3" placeholder="Rank">
+                                <label>Spiritual fulfillment</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 43. I feel MOST happy when:</div>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="achievement" required>
+                                <span>I achieve something significant</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="relationships">
+                                <span>I spend quality time with family/friends</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="helping">
+                                <span>I help someone in need</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="material">
+                                <span>I earn/buy something I wanted</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="hobbies">
+                                <span>I pursue my hobbies/interests</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="q43_happiness_source" value="parents">
+                                <span>I make my parents proud</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 44. My BIGGEST aspiration in life is:</div>
+                        <select name="q44_aspiration" required>
+                            <option value="">-- Select --</option>
+                            <option value="financial">Financial independence/wealth</option>
+                            <option value="career">Career excellence in my field</option>
+                            <option value="family">Happy married/family life</option>
+                            <option value="social_impact">Making a positive social impact</option>
+                            <option value="spiritual">Spiritual growth/enlightenment</option>
+                            <option value="fame">Fame/Recognition</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 45-46. Rate your CURRENT satisfaction:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Very<br>Dissatisfied<br>(1)</th>
+                                    <th>Dissatisfied<br>(2)</th>
+                                    <th>Neutral<br>(3)</th>
+                                    <th>Satisfied<br>(4)</th>
+                                    <th>Very<br>Satisfied<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>45. Overall life satisfaction</td>
+                                    <td><input type="radio" name="q45_life_satisfaction" value="1" required></td>
+                                    <td><input type="radio" name="q45_life_satisfaction" value="2"></td>
+                                    <td><input type="radio" name="q45_life_satisfaction" value="3"></td>
+                                    <td><input type="radio" name="q45_life_satisfaction" value="4"></td>
+                                    <td><input type="radio" name="q45_life_satisfaction" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>46. Progress toward my life goals</td>
+                                    <td><input type="radio" name="q46_goal_progress" value="1" required></td>
+                                    <td><input type="radio" name="q46_goal_progress" value="2"></td>
+                                    <td><input type="radio" name="q46_goal_progress" value="3"></td>
+                                    <td><input type="radio" name="q46_goal_progress" value="4"></td>
+                                    <td><input type="radio" name="q46_goal_progress" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECTION 7: CULTURAL IDENTITY -->
+                <div class="section" data-section="7">
+                    <div class="section-title">Section 6: Cultural Identity & Social Worldview</div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="required">*</span> 47-54. Rate your agreement:</div>
+                        <table class="scale-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Strongly<br>Disagree<br>(1)</th>
+                                    <th>Disagree<br>(2)</th>
+                                    <th>Neutral<br>(3)</th>
+                                    <th>Agree<br>(4)</th>
+                                    <th>Strongly<br>Agree<br>(5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>47. I feel strongly connected to my Indian cultural identity</td>
+                                    <td><input type="radio" name="q47_indian_identity" value="1" required></td>
+                                    <td><input type="radio" name="q47_indian_identity" value="2"></td>
+                                    <td><input type="radio" name="q47_indian_identity" value="3"></td>
+                                    <td><input type="radio" name="q47_indian_identity" value="4"></td>
+                                    <td><input type="radio" name="q47_indian_identity" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>48. I feel like a global citizen, not limited to one culture</td>
+                                    <td><input type="radio" name="q48_global_citizen" value="1" required></td>
+                                    <td><input type="radio" name="q48_global_citizen" value="2"></td>
+                                    <td><input type="radio" name="q48_global_citizen" value="3"></td>
+                                    <td><input type="radio" name="q48_global_citizen" value="4"></td>
+                                    <td><input type="radio" name="q48_global_citizen" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>49. Indian traditions and values are still relevant today</td>
+                                    <td><input type="radio" name="q49_traditions_relevant" value="1" required></td>
+                                    <td><input type="radio" name="q49_traditions_relevant" value="2"></td>
+                                    <td><input type="radio" name="q49_traditions_relevant" value="3"></td>
+                                    <td><input type="radio" name="q49_traditions_relevant" value="4"></td>
+                                    <td><input type="radio" name="q49_traditions_relevant" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>50. Individual freedom is more important than social norms</td>
+                                    <td><input type="radio" name="q50_individual_freedom" value="1" required></td>
+                                    <td><input type="radio" name="q50_individual_freedom" value="2"></td>
+                                    <td><input type="radio" name="q50_individual_freedom" value="3"></td>
+                                    <td><input type="radio" name="q50_individual_freedom" value="4"></td>
+                                    <td><input type="radio" name="q50_individual_freedom" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>51. India's future is bright and promising</td>
+                                    <td><input type="radio" name="q51_india_future" value="1" required></td>
+                                    <td><input type="radio" name="q51_india_future" value="2"></td>
+                                    <td><input type="radio" name="q51_india_future" value="3"></td>
+                                    <td><input type="radio" name="q51_india_future" value="4"></td>
+                                    <td><input type="radio" name="q51_india_future" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>52. Technology/social media is improving our lives</td>
+                                    <td><input type="radio" name="q52_technology" value="1" required></td>
+                                    <td><input type="radio" name="q52_technology" value="2"></td>
+                                    <td><input type="radio" name="q52_technology" value="3"></td>
+                                    <td><input type="radio" name="q52_technology" value="4"></td>
+                                    <td><input type="radio" name="q52_technology" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>53. Gender equality should be practiced in all aspects of life</td>
+                                    <td><input type="radio" name="q53_gender_equality_all" value="1" required></td>
+                                    <td><input type="radio" name="q53_gender_equality_all" value="2"></td>
+                                    <td><input type="radio" name="q53_gender_equality_all" value="3"></td>
+                                    <td><input type="radio" name="q53_gender_equality_all" value="4"></td>
+                                    <td><input type="radio" name="q53_gender_equality_all" value="5"></td>
+                                </tr>
+                                <tr>
+                                    <td>54. Western culture is negatively influencing Indian youth</td>
+                                    <td><input type="radio" name="q54_western_influence" value="1" required></td>
+                                    <td><input type="radio" name="q54_western_influence" value="2"></td>
+                                    <td><input type="radio" name="q54_western_influence" value="3"></td>
+                                    <td><input type="radio" name="q54_western_influence" value="4"></td>
+                                    <td><input type="radio" name="q54_western_influence" value="5"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECTION 8: CHALLENGES (OPTIONAL) -->
+                <div class="section" data-section="8">
+                    <div class="section-title">Section 7: Current Challenges (Optional)</div>
+                    
+                    <div class="question">
+                        <div class="question-text">55. My BIGGEST current concern/challenge is:</div>
+                        <select name="q55_challenge">
+                            <option value="">-- Select (Optional) --</option>
+                            <option value="academic">Academic/Career pressure</option>
+                            <option value="financial">Financial problems</option>
+                            <option value="family">Family conflicts</option>
+                            <option value="relationship">Relationship issues</option>
+                            <option value="marriage">Marriage/settling down pressure</option>
+                            <option value="purpose">Lack of clear purpose/direction</option>
+                            <option value="mental_health">Mental health/stress</option>
+                            <option value="job">Job/future uncertainty</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">56. When facing difficult times, I get strength mainly from:</div>
+                        <select name="q56_support">
+                            <option value="">-- Select (Optional) --</option>
+                            <option value="family">Family support</option>
+                            <option value="friends">Friends</option>
+                            <option value="faith">Religious/spiritual faith</option>
+                            <option value="self">Belief in myself</option>
+                            <option value="professional">Professional help (counselor/therapist)</option>
+                            <option value="online">Social media/online communities</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- COMPLETION SECTION -->
+                <div class="section" data-section="9">
+                    <div class="success-message">
+                        <h2>✓ Survey Complete!</h2>
+                        <p>Thank you for completing the Youth Life Perspectives Scale.</p>
+                        <p>Your responses have been successfully saved.</p>
+                        <div class="response-id" id="responseDisplay"></div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="button-group" id="navigationButtons">
+                <button type="button" class="btn-secondary" id="prevBtn" onclick="changeSection(-1)">Previous</button>
+                <button type="button" class="btn-primary" id="nextBtn" onclick="changeSection(1)">Next</button>
+                <button type="button" class="btn-success" id="submitBtn" onclick="submitSurvey()" style="display: none;">Submit Survey</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ CONFIGURATION - REPLACE THIS URL ============
+        // After setting up Google Apps Script, paste your Web App URL here
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3wVUOzyNVS0Qbh57YNaZEqLL_P39HLMMofPYGbhqoUuGnSXKA1HbuVeLEMA3p5WbKxg/exec';
+        // ==========================================================
+
+        let currentSection = 0;
+        const totalSections = 10;
+        let surveyData = {};
+
+        function updateProgress() {
+            const progress = (currentSection / (totalSections - 1)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showSection(n) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            sections[n].classList.add('active');
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const navButtons = document.getElementById('navigationButtons');
+            
+            if (n === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'block';
+            }
+            
+            if (n === totalSections - 2) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else if (n === totalSections - 1) {
+                navButtons.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+            
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function validateSection(section) {
+            const currentSectionElement = document.querySelector(`.section[data-section="${section}"]`);
+            const requiredInputs = currentSectionElement.querySelectorAll('[required]');
+            
+            for (let input of requiredInputs) {
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    const checked = currentSectionElement.querySelector(`input[name="${name}"]:checked`);
+                    if (!checked) {
+                        alert(`Please answer all required questions in this section.`);
+                        input.focus();
+                        return false;
+                    }
+                } else if (!input.value) {
+                    alert(`Please answer all required questions in this section.`);
+                    input.focus();
+                    return false;
+                }
+            }
+            
+            if (section === 0) {
+                const consent = document.querySelector('input[name="consent"]:checked');
+                if (consent && consent.value === 'no') {
+                    alert('You must consent to participate to continue with the survey.');
+                    return false;
+                }
+            }
+            
+            if (section === 1) {
+                const age = parseInt(document.querySelector('input[name="age"]').value);
+                if (age < 18 || age > 28) {
+                    alert('This survey is for participants aged 18-28 years only.');
+                    return false;
+                }
+            }
+            
+            if (section === 4) {
+                const rankInputs = currentSectionElement.querySelectorAll('[name^="rank_"]');
+                const ranks = Array.from(rankInputs).map(input => input.value).filter(val => val !== '');
+                if (ranks.length !== 5) {
+                    alert('Question 20: Please rank exactly 5 values (1-5).');
+                    return false;
+                }
+                const uniqueRanks = new Set(ranks);
+                if (uniqueRanks.size !== 5) {
+                    alert('Question 20: Each rank (1-5) should be used only once.');
+                    return false;
+                }
+            }
+            
+            if (section === 6) {
+                const successInputs = currentSectionElement.querySelectorAll('[name^="success_"]');
+                const successRanks = Array.from(successInputs).map(input => input.value).filter(val => val !== '');
+                if (successRanks.length !== 3) {
+                    alert('Question 42: Please rank exactly 3 items (1-3) for success definition.');
+                    return false;
+                }
+                const uniqueSuccessRanks = new Set(successRanks);
+                if (uniqueSuccessRanks.size !== 3) {
+                    alert('Question 42: Each rank (1-3) should be used only once.');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function changeSection(direction) {
+            if (direction === 1 && !validateSection(currentSection)) {
+                return;
+            }
+            
+            currentSection += direction;
+            if (currentSection >= totalSections) {
+                currentSection = totalSections - 1;
+            }
+            if (currentSection < 0) {
+                currentSection = 0;
+            }
+            
+            showSection(currentSection);
+        }
+
+        async function submitSurvey() {
+            if (!validateSection(currentSection)) {
+                return;
+            }
+
+            // Check if Google Script URL is configured
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                alert('Error: Google Script URL not configured. Please follow the setup instructions.');
+                return;
+            }
+            
+            // Show loading overlay
+            document.getElementById('loadingOverlay').classList.add('active');
+            
+            // Collect all form data
+            const form = document.getElementById('surveyForm');
+            const formData = new FormData(form);
+            surveyData = {};
+            surveyData.timestamp = new Date().toISOString();
+            surveyData.responseId = 'YLPS-' + Date.now();
+            
+            for (let [key, value] of formData.entries()) {
+                surveyData[key] = value;
+            }
+            
+            try {
+                // Send data to Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(surveyData)
+                });
+                
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').classList.remove('active');
+                
+                // Display success message
+                document.getElementById('responseDisplay').innerHTML = `
+                    <strong>Response ID:</strong> ${surveyData.responseId}<br>
+                    <strong>Timestamp:</strong> ${new Date(surveyData.timestamp).toLocaleString()}<br>
+                    <strong>Status:</strong> <span style="color: #28a745;">✓ Successfully Saved</span><br>
+                    <strong>Total Questions Answered:</strong> ${Object.keys(surveyData).length - 2}
+                `;
+                
+                // Show completion page
+                currentSection = totalSections - 1;
+                showSection(currentSection);
+                
+            } catch (error) {
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').classList.remove('active');
+                
+                alert('There was an error submitting your response. Please try again or contact the researcher.');
+                console.error('Submission error:', error);
+            }
+        }
+
+        // Initialize
+        showSection(0);
+    </script>
+</body>
+</html>
